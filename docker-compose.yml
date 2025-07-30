@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: bitnami/postgresql:latest
+    container_name: movies_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_USERNAME={DB_USERNAME}
+      - POSTGRESQL_PASSWORD={DB_PASSWORD}
+      - POSTGRESQL_DATABASE={DB_NAME}
+    volumes:
+      - postgres_data:/bitnami/postgresql
+
+volumes:
+  postgres_data:
