@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { DataSource } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
+import validate from './env.validate';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import configuration from './config/configuration';
       envFilePath: '.env',
       isGlobal: true,
       load: [configuration],
+      validate,
     }),
     MoviesModule,
     DatabaseModule,
