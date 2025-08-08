@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import validate from './env.validate';
 import { UsersModule } from './users/users.module';
+import { AwsModule } from './aws/aws.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { UsersModule } from './users/users.module';
     DatabaseModule,
     AuthModule,
     UsersModule,
+    AwsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
