@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('movies')
 export class Movie {
@@ -43,4 +44,7 @@ export class Movie {
 
   @Column({ nullable: true })
   trailer: string;
+
+  @ManyToOne(() => User, (user) => user.movies, { onDelete: 'CASCADE' })
+  user: User;
 }
