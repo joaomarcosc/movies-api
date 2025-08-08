@@ -16,8 +16,6 @@ export class MoviesService {
       where: { title: createMovieDTO.title },
     });
 
-    console.log('Creating movie:', createMovieDTO);
-
     if (findExistingMovie) {
       throw new ConflictException('Movie with this title already exists');
     }
