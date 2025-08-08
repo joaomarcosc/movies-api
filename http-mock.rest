@@ -1,0 +1,33 @@
+### Register user
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+{
+  "email": "j.marcos9@hotmail.com",
+  "password": "string",
+  "name": "123456"
+}
+
+### Login user
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "j.marcos9@hotmail.com",
+  "password": "string"
+}
+
+### Get user profile
+GET http://localhost:3000/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImoubWFyY29zOUBob3RtYWlsLmNvbSIsInN1YiI6IjQ4ZGMyZTc2LTdlMDctNDE3Zi04Y2NhLTM4MmQyOGQ0ZWJjNSIsImlhdCI6MTc1NDY3MzM3MCwiZXhwIjoxNzU0NzU5NzcwfQ.ckg71SzW1shnFtgAODU9XjYTL2lmiCT9S0jGeclB978
+
+
+### Get presigned URL for file upload
+GET http://localhost:3000/aws/generate-presigned-url
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImoubWFyY29zOUBob3RtYWlsLmNvbSIsInN1YiI6IjQ4ZGMyZTc2LTdlMDctNDE3Zi04Y2NhLTM4MmQyOGQ0ZWJjNSIsImlhdCI6MTc1NDY3MzM3MCwiZXhwIjoxNzU0NzU5NzcwfQ.ckg71SzW1shnFtgAODU9XjYTL2lmiCT9S0jGeclB978
+
+{
+  "fileName": "example.jpg",
+  "fileType": "image/jpeg"
+}
