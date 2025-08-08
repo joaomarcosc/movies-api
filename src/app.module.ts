@@ -5,9 +5,10 @@ import { MoviesModule } from './movies/movies.module';
 import { DatabaseModule } from './database/database.module';
 import { DataSource } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import configuration from './config/configuration';
 import validate from './env.validate';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import validate from './env.validate';
     }),
     MoviesModule,
     DatabaseModule,
+    AuthModule,
     UsersModule,
   ],
   controllers: [AppController],
