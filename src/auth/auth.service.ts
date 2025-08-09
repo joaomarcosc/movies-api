@@ -3,6 +3,7 @@ import { UsersService } from 'src/users/users.service';
 import { SigninUserDto } from './dto/signin-user.dto';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from 'src/types/jwt.types';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +23,7 @@ export class AuthService {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
 
-    const payload = {
+    const payload: JwtPayload = {
       email: user.email,
       sub: user.id,
     };
