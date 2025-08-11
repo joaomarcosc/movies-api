@@ -1,10 +1,11 @@
+import { Exclude } from 'class-transformer';
 import { User } from 'src/users/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('movies')
 export class Movie {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ unique: true })
   title: string;
@@ -46,5 +47,6 @@ export class Movie {
   trailer: string;
 
   @ManyToOne(() => User, (user) => user.movies, { onDelete: 'CASCADE' })
+  @Exclude()
   user: User;
 }
