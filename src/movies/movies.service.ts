@@ -103,4 +103,19 @@ export class MoviesService {
 
     return plainToInstance(Movie, updatedMovie);
   }
+
+  async delete(movieId: string, userId: string): Promise<void> {
+    const movie = await this.movieRepository.findOne({
+      where: {
+        id: movieId,
+        user: { id: userId },
+      },
+    });
+
+    if (!movie) {
+      throw new HttpException('Movie not found', HttpStatus.NOT_FOUND);
+    }
+
+    await this.movieRepository.remove(movie);
+  }
 }

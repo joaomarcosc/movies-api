@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   HttpException,
   HttpStatus,
   Param,
@@ -53,6 +54,23 @@ export class MoviesController {
         movieId,
         req.user.userId,
       );
+    } catch (error) {
+      throw new HttpException(
+        'Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        { cause: error },
+      );
+    }
+  }
+
+  @Delete('delete/:id')
+  @UseGuards(JwtAuthGuard)
+  async deleteMovie(
+    @Param('id') movieId: string,
+    @Request() req: { user: { userId: string } },
+  ): Promise<void> {
+    try {
+      await this.moviesService.delete(movieId, req.user.userId);
     } catch (error) {
       throw new HttpException(
         'Server Error',
