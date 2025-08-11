@@ -34,4 +34,28 @@ export class UsersService {
 
     return user;
   }
+
+  async findById(id: string): Promise<User> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    return user;
+  }
+
+  async findAll(skip: number, take: number): Promise<User[]> {
+    const users = await this.usersRepository.find({
+      skip,
+      take,
+      select: ['email'],
+    });
+
+    if (!users.length) {
+      throw new HttpException('Does dont have users', HttpStatus.BAD_REQUEST);
+    }
+
+    return users;
+  }
 }
