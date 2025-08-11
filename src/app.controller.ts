@@ -13,8 +13,10 @@ export class AppController {
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
-  getProfile(@Request() req: { user: { email: string } }): string {
+  getProfile(
+    @Request() req: { user: { email: string; userId: string } },
+  ): string {
     const user = req.user;
-    return `This is the user profile endpoint for ${user.email}.`;
+    return `This is the user profile endpoint for ${user.userId}.`;
   }
 }

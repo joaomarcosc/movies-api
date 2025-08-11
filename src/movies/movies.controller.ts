@@ -4,7 +4,9 @@ import {
   Controller,
   HttpException,
   HttpStatus,
+  Param,
   Post,
+  Put,
   Request,
   UseGuards,
   UseInterceptors,
@@ -13,6 +15,7 @@ import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { Movie } from './movies.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-guard';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -23,10 +26,33 @@ export class MoviesController {
   @UseInterceptors(ClassSerializerInterceptor)
   createMovie(
     @Body() createMovieDto: CreateMovieDto,
-    @Request() req: { userId: string },
+    @Request() req: { user: { userId: string } },
   ): Promise<Movie> {
     try {
-      return this.moviesService.createMovie(createMovieDto, req.userId);
+      return this.moviesService.createMovie(createMovieDto, req.user.userId);
+    } catch (error) {
+      throw new HttpException(
+        'Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        { cause: error },
+      );
+    }
+  }
+
+  @Put('update/:id')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  updateMovie(
+    @Body() updateMovieDto: UpdateMovieDto,
+    @Param('id') movieId: string,
+    @Request() req: { user: { userId: string } },
+  ): Promise<Movie> {
+    try {
+      return this.moviesService.updateMovie(
+        updateMovieDto,
+        movieId,
+        req.user.userId,
+      );
     } catch (error) {
       throw new HttpException(
         'Server Error',

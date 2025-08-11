@@ -12,6 +12,7 @@ import { UsersService } from 'src/users/users.service';
 import { plainToInstance } from 'class-transformer';
 import { NotificationsService } from 'src/notifications/notifications.service';
 import { format } from 'date-fns';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 
 @Injectable()
 export class MoviesService {
@@ -69,5 +70,37 @@ export class MoviesService {
     return await this.movieRepository.find({
       where: { releaseDate },
     });
+  }
+
+  async updateMovie(
+    updateMovieDto: UpdateMovieDto,
+    movieId: string,
+    userId: string,
+  ): Promise<Movie> {
+    console.log(updateMovieDto, movieId, userId);
+
+    const movie = await this.movieRepository.findOne({
+      where: {
+        id: movieId,
+        user: { id: userId },
+      },
+    });
+
+    if (!movie) {
+      throw new HttpException(
+        'Movie not found or new date to update',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    const updatedMovie = Object.assign(movie, updateMovieDto);
+
+    if (movie.title === updateMovieDto.title) {
+      throw new ConflictException('Movie with this title already exists');
+    }
+
+    await this.movieRepository.save(updatedMovie);
+
+    return plainToInstance(Movie, updatedMovie);
   }
 }
