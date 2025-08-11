@@ -10,6 +10,10 @@ import configuration from './config/configuration';
 import validate from './env.validate';
 import { UsersModule } from './users/users.module';
 import { AwsModule } from './aws/aws.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { BullModule } from '@nestjs/bullmq';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -19,11 +23,20 @@ import { AwsModule } from './aws/aws.module';
       load: [configuration],
       validate,
     }),
+    ScheduleModule.forRoot(),
+    BullModule.forRoot({
+      connection: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
     MoviesModule,
     DatabaseModule,
     AuthModule,
     UsersModule,
     AwsModule,
+    NotificationsModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
