@@ -44,7 +44,6 @@ export class NotificationsService {
       .getMany();
 
     if (!releasedMovies.length) {
-      this.logger.log('No movies being released today.');
       return;
     }
 
