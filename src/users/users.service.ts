@@ -58,4 +58,10 @@ export class UsersService {
 
     return users;
   }
+
+  // Salvando UPDATE ou dando INSERT: Atenção, usado atualmente somente na geração de um token para usuario já validado. Caso seja qualquer update, garanta que filtre o usuario antes
+  async update(user: Partial<User>): Promise<User> {
+    await this.usersRepository.save(user);
+    return plainToInstance(User, user);
+  }
 }

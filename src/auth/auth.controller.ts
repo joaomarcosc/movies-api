@@ -51,4 +51,19 @@ export class AuthController {
       );
     }
   }
+
+  @Post('refresh-token')
+  async refreshToken(@Body('refreshToken') refreshToken: string) {
+    try {
+      const newAccessToken = await this.authService.refreshToken(refreshToken);
+
+      return newAccessToken;
+    } catch (error) {
+      throw new HttpException(
+        'server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        { cause: error },
+      );
+    }
+  }
 }

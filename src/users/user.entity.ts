@@ -27,6 +27,9 @@ export class User {
   @OneToMany(() => Movie, (movie) => movie.user)
   movies: Movie[];
 
+  @Column({ nullable: true })
+  hashedRefreshToken: string;
+
   @CreateDateColumn({ type: 'timestamp with time zone', name: 'created_at' })
   createdAt: Date;
 
